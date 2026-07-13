@@ -185,12 +185,17 @@ export function setupPlayerHandler(client) {
     });
 
     client.riffy.on('trackError', async (player, track, payload) => {
-        logger.error(`Track error in ${player.guildId} for "${track?.info?.title}":`, payload?.error || payload);
-        const guildData = getGuildMusicData(player.guildId);
-        if (guildData.playerChannelId) {
+        const trackTitle = track?.info?.title || 'unknown track';
+        const guildId = player?.guildId || 'unknown guild';
+        const errorMessage = payload?.error || payload?.message || JSON.stringify(payload);
+        
+        logger.error(`Track error in ${guildId} for "${trackTitle}":`, errorMessage);
+        
+        const guildData = getGuildMusicData(guildId);
+        if (guildData?.playerChannelId) {
             const channel = client.channels.cache.get(guildData.playerChannelId);
             if (channel) {
-                channel.send(`Failed to play **${track?.info?.title || 'track'}**. Skipping...`).catch(() => null);
+                channel.send(`Failed to play **${trackTitle}**. Skipping...`).catch(() => null);
             }
         }
     });
