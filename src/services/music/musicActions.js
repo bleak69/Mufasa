@@ -117,16 +117,79 @@ export async function joinVoiceChannel(client, interaction) {
 }
 
 export async function playQuery(client, interaction, query) {
+    const { player } = await ensurePlayer(client, interaction);
+
+    const result = await client.riffy.resolve({
+        query,
+        requester: interaction.user,
+    });
+
+    const { loadType, tracks, playlistInfo } = result;
+
+    if (
+        loadType === 'playlist' ||
+        loadType === 'PLAYLIST_LOADED'
+    ) {
+        let added = 0;
+
+        for (const track of tracks) {
+            track.info.requester = interaction.user;
+            player.queue.add(track);
+            added++;
+        }
+
+        if (!player.playing && !player.paused && !player.current) {
+            player.play();
+        }
+
+        return {
+            embed: successEmbed(
+                'Playlist Added',
+                `Added **${added}** tracks from **${playlistInfo?.name || 'playlist'}**`,
+            ),
+        };
+    }
+
+
+    if (
+        loadType === 'search' ||
+        loadType === 'track' ||
+        loadType === 'SEARCH_RESULT' ||
+        loadType === 'TRACK_LOADED'
+    ) {
+        const track = tracks?.[0];
+
+        if (!track) {
+            throw new TitanBotError(
+                'No results',
+                ErrorTypes.USER_INPUT,
+                'No song found.',
+            );
+        }
+
+        track.info.requester = interaction.user;
+
+        player.queue.add(track);
+
+        if (!player.playing && !player.paused && !player.current) {
+            player.play();
+        }
+
+        return {
+            embed: successEmbed(
+                'Track Added',
+                `**${track.info.title}** by **${track.info.author}**`,
+            ),
+        };
+    }
+
+
     throw new TitanBotError(
-        'YouTube URL blocked',
+        'No results',
         ErrorTypes.USER_INPUT,
-        'YouTube links are not supported. Try a song name instead.',
+        `Lavalink returned: ${loadType}`,
     );
 }
-
-    const { player, guildData } = await ensurePlayer(client, interaction);
-
-    const { player, guildData } = await ensurePlayer(client, interaction);
 
     const result = await client.riffy.resolve({
         query,
