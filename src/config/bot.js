@@ -11,7 +11,7 @@ export const botConfig = {
   // - "invisible" = appears offline
   presence: {
     // Current online state shown on Discord.
-    status: "dnd",
+    status: "idle",
 
     // Activity lines shown under the bot name.
     // `type` number mapping from Discord:
@@ -24,7 +24,7 @@ export const botConfig = {
     activities: [
       {
         // Text users will see (example: "Playing /help | Titan Bot").
-        name: "Love all trust few do wrong to none",
+        name: "Love all",
         // Activity type number (0 = Playing).
         type: 4,
       },
@@ -96,9 +96,9 @@ export const botConfig = {
 
       // Standard status colors for success/error/warning/info messages.
       success: "#57F287",
-      error: "#ED4245",
-      warning: "#FEE75C",
-      info: "#3498DB",
+      error: "#FF0000",
+      warning: "#FF0000",
+      info: "#FFEA00",
 
       // Neutral utility colors.
       light: "#FFFFFF",
@@ -424,13 +424,13 @@ export const botConfig = {
   // GENERIC BOT MESSAGES
   // =========================
   messages: {
-    noPermission: "You do not have permission to use this command.",
-    cooldownActive: "Please wait {time} before using this command again.",
-    errorOccurred: "An error occurred while executing this command.",
+    noPermission: "My mom told me not to talk to strangers without admin rights.",
+    cooldownActive: "Spamming me won't make your crush text you back. Wait a second",
+    errorOccurred: "Mufasa Lagged out.Press Alt+F4 for further info",
     missingPermissions:
-      "I am missing required permissions to perform this action.",
-    commandDisabled: "This command has been disabled.",
-    maintenanceMode: "The bot is currently in maintenance mode.",
+      "I need permission… I’m just a fancy toaster right now.",
+    commandDisabled: "That button is just for decoration now. Please don't touch.",
+    maintenanceMode: "I'm taking a nap. Go bother a human for a while.",
   },
 
   // =========================
