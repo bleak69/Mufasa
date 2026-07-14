@@ -57,7 +57,7 @@ const getCurrentSchemaVersion = async (client) => {
 };
 
 const createTables = async (client) => {
-  logger.info('📊 Creating database tables...');
+  logger.info(' Creating database tables...');
 
   const tables = [
     
@@ -195,11 +195,11 @@ const createTables = async (client) => {
     }
   }
 
-  logger.info('✅ All tables created successfully');
+  logger.info(' All tables created successfully');
 };
 
 const createIndexes = async (client) => {
-  logger.info('📈 Creating indexes...');
+  logger.info(' Creating indexes...');
 
   const indexes = [
     'CREATE INDEX IF NOT EXISTS idx_user_levels_guild ON user_levels(guild_id)',
@@ -218,11 +218,11 @@ const createIndexes = async (client) => {
     }
   }
 
-  logger.info('✅ All indexes created successfully');
+  logger.info(' All indexes created successfully');
 };
 
 const createTriggers = async (client) => {
-  logger.info('⏰ Setting up automatic timestamps...');
+  logger.info(' Setting up automatic timestamps...');
 
   const triggers = [
     {
@@ -289,7 +289,7 @@ const createTriggers = async (client) => {
     }
   }
 
-  logger.info('✅ All triggers created successfully');
+  logger.info(' All triggers created successfully');
 };
 
 const migrate = async () => {
@@ -335,7 +335,7 @@ const checkMigrationVersion = async () => {
     }
 
     logger.info(
-      `✅ Schema version check passed (v${currentVersion}, label: ${current.label}).`
+      ` Schema version check passed (v${currentVersion}, label: ${current.label}).`
     );
   } catch (error) {
     logger.error('❌ Migration check failed:', error);
